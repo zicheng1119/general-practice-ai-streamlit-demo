@@ -6,6 +6,8 @@ from pathlib import Path
 
 import streamlit as st
 
+from streamlit_secrets import build_env_from_secrets, mask_secret
+
 
 ROOT = Path(__file__).resolve().parent
 BACKEND = ROOT / "backend"
@@ -14,45 +16,14 @@ if str(BACKEND) not in sys.path:
 
 
 def _seed_runtime_env() -> None:
-    defaults = {
-        "AI_TRIAGE_MODE": "deepseek",
-        "AI_TRIAGE_PROVIDER": "deepseek",
-        "AI_TRIAGE_MODEL": "deepseek-v4-pro",
-        "AI_TRIAGE_BASE_URL": "https://api.deepseek.com",
-        "AI_TRIAGE_REASONING_EFFORT": "high",
-        "AI_TRIAGE_THINKING_MODE": "disabled",
-        "AI_TRIAGE_SECONDARY_PROVIDER": "kimi",
-        "AI_TRIAGE_SECONDARY_MODEL": "moonshot-v1-auto",
-        "AI_TRIAGE_SECONDARY_BASE_URL": "https://api.moonshot.cn/v1",
-        "AI_TRIAGE_SECONDARY_REASONING_EFFORT": "high",
-        "AI_TRIAGE_SECONDARY_THINKING_MODE": "disabled",
-        "BOOKING_PROVIDER": "mock",
-        "CLINICAL_PROVIDER": "memory",
-        "REMINDER_PROVIDER": "medtimer",
-    }
     try:
         secrets = dict(st.secrets)
     except Exception:
         secrets = {}
 
-    for key, value in defaults.items():
-        os.environ.setdefault(key, value)
-    for key in (
-        "AI_TRIAGE_API_KEY",
-        "AI_TRIAGE_SECONDARY_API_KEY",
-        "BOOKING_PROVIDER",
-        "BOOKING_BASE_URL",
-        "BOOKING_API_KEY",
-        "BOOKING_USERNAME",
-        "BOOKING_PASSWORD",
-        "CLINICAL_PROVIDER",
-        "CLINICAL_BASE_URL",
-        "CLINICAL_USERNAME",
-        "CLINICAL_PASSWORD",
-        "REMINDER_PROVIDER",
-    ):
-        if secrets.get(key):
-            os.environ[key] = str(secrets[key])
+    env = build_env_from_secrets(secrets)
+    for key, value in env.items():
+        os.environ[key] = value
 
 
 _seed_runtime_env()
@@ -343,6 +314,11 @@ def main() -> None:
     with st.sidebar:
         st.header("演示控制")
         st.write("部署到 Streamlit Cloud 后，请在 Secrets 中配置 DeepSeek 和 Kimi API Key。")
+        st.subheader("Secrets 自检")
+        st.caption(f"DeepSeek: {mask_secret(os.getenv('AI_TRIAGE_API_KEY'))}")
+        st.caption(f"Kimi: {mask_secret(os.getenv('AI_TRIAGE_SECONDARY_API_KEY'))}")
+        if not os.getenv("AI_TRIAGE_API_KEY") or not os.getenv("AI_TRIAGE_SECONDARY_API_KEY"):
+            st.warning("如果这里显示未配置，请检查 Streamlit Cloud 的 Secrets 是否保存并重启应用。")
         if st.button("清空当前演示", use_container_width=True):
             for key in list(st.session_state.keys()):
                 del st.session_state[key]

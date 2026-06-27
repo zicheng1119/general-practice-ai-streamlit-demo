@@ -246,4 +246,13 @@ CLINICAL_PROVIDER = "memory"
 REMINDER_PROVIDER = "medtimer"
 ```
 
+也可以只填两个简写 key，应用会自动使用默认模型配置：
+
+```toml
+DEEPSEEK_API_KEY = "your-deepseek-api-key"
+KIMI_API_KEY = "your-kimi-api-key"
+```
+
+如果把 Secrets 放在 `[general]` 分组里也可以，部署版会自动识别。保存 Secrets 后，请在 Streamlit Cloud 中点击重启或重新部署应用。应用侧边栏会显示 `Secrets 自检`，只显示脱敏后的配置状态，不会展示完整 key。
+
 本地可参考 [.streamlit/secrets.toml.example](./.streamlit/secrets.toml.example)，但真实 `.streamlit/secrets.toml` 已被 `.gitignore` 排除。

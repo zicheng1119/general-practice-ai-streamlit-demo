@@ -1,6 +1,7 @@
 backend/.env
 frontend/.env
 .streamlit/secrets.toml
+.DS_Store
 .venv-fastchat/
 .models/
 .pytest_cache/

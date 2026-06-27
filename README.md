@@ -9,6 +9,8 @@
 - 患者白话医嘱
 - 用药/复诊提醒与随访反馈
 
+线上演示地址：<https://general-practice-ai-demo.onrender.com/>
+
 ## 目录结构
 
 - [frontend](./frontend): React + Vite 多页面前端
@@ -304,6 +306,7 @@ REMINDER_PROVIDER=medtimer
 
 Render 部署完成后：
 
+- 当前线上演示地址：<https://general-practice-ai-demo.onrender.com/>
 - 打开 Render 给出的公网 URL，应该看到 React 版 Web Demo。
 - 访问 `<Render URL>/health`，应该返回 `{"status":"ok"}`。
 - 前端路由如 `<Render URL>/patient/intake` 会由 FastAPI 回退到 React 页面。

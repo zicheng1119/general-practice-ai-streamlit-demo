@@ -1,6 +1,7 @@
 .git
 .gitignore
 .dockerignore
+.DS_Store
 backend/.env
 frontend/.env
 .streamlit/secrets.toml

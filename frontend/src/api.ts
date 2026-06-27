@@ -12,7 +12,12 @@ import type {
 } from './types'
 
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://127.0.0.1:8000'
+export function resolveApiBaseUrl(value: string | undefined) {
+  return value?.trim() ?? ''
+}
+
+
+const API_BASE_URL = resolveApiBaseUrl(import.meta.env.VITE_API_BASE_URL)
 
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {

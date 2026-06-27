@@ -1,0 +1,14 @@
+backend/.env
+frontend/.env
+.streamlit/secrets.toml
+.venv-fastchat/
+.models/
+.pytest_cache/
+*.log
+*.log.*
+frontend/node_modules/
+frontend/dist/
+.playwright-cli/
+output/
+__pycache__/
+*.pyc

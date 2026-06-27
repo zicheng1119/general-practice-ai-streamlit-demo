@@ -1,0 +1,61 @@
+:root {
+  font-family:
+    'Avenir Next',
+    'Helvetica Neue',
+    sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #142131;
+  background:
+    radial-gradient(circle at top left, rgba(204, 84, 63, 0.08), transparent 24%),
+    radial-gradient(circle at top right, rgba(17, 91, 138, 0.08), transparent 32%),
+    #f4eee7;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(18, 33, 49, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18, 33, 49, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+strong {
+  font-family:
+    'Iowan Old Style',
+    'Baskerville',
+    serif;
+  color: #102033;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}

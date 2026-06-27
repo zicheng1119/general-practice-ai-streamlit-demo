@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.adapters import (
     get_booking_provider,
@@ -31,6 +34,9 @@ from app.services import (
 from app.store import store
 
 
+FRONTEND_DIST = Path(__file__).resolve().parents[2] / "frontend" / "dist"
+FRONTEND_INDEX = FRONTEND_DIST / "index.html"
+
 app = FastAPI(title="全科智能就医闭环 Demo API")
 app.add_middleware(
     CORSMiddleware,
@@ -38,6 +44,20 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+if (FRONTEND_DIST / "assets").exists():
+    app.mount("/assets", StaticFiles(directory=FRONTEND_DIST / "assets"), name="frontend-assets")
+
+
+def _frontend_file_response(path: str) -> FileResponse:
+    if not FRONTEND_INDEX.exists():
+        raise HTTPException(status_code=404, detail="frontend build not found")
+
+    dist_root = FRONTEND_DIST.resolve()
+    candidate = (FRONTEND_DIST / path).resolve()
+    if candidate.is_file() and candidate.is_relative_to(dist_root):
+        return FileResponse(candidate)
+    return FileResponse(FRONTEND_INDEX)
 
 
 @app.get("/health")
@@ -210,3 +230,8 @@ def doctor_followup_reply(encounter_id: str, payload: DoctorFollowupReplyRequest
     }
     latest["care_status"] = "doctor_replied"
     return latest
+
+
+@app.get("/{full_path:path}", include_in_schema=False)
+def serve_frontend(full_path: str) -> FileResponse:
+    return _frontend_file_response(full_path)

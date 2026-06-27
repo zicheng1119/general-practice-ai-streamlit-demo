@@ -3,12 +3,29 @@ import httpx
 import pytest
 from types import SimpleNamespace
 
+import app.main as main_module
 from app.main import app
 from app.adapters import OpenMRSClinicalProvider
 from app.services import generate_triage_result, request_deepseek_triage
 
 
 client = TestClient(app)
+
+
+def test_react_frontend_routes_fall_back_to_built_index(tmp_path, monkeypatch: pytest.MonkeyPatch):
+    dist = tmp_path / "dist"
+    dist.mkdir()
+    index = dist / "index.html"
+    index.write_text("<!doctype html><html><body><div id='root'></div></body></html>", encoding="utf-8")
+
+    monkeypatch.setattr(main_module, "FRONTEND_DIST", dist, raising=False)
+    monkeypatch.setattr(main_module, "FRONTEND_INDEX", index, raising=False)
+
+    response = client.get("/patient/intake")
+
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "id='root'" in response.text
 
 
 def test_red_flag_triage_short_circuits_to_emergency():

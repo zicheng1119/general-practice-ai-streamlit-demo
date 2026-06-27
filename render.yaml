@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: general-practice-ai-demo
+    runtime: docker
+    plan: free
+    autoDeploy: true
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHONPATH
+        value: /app/backend
+      - key: AI_TRIAGE_MODE
+        value: deepseek
+      - key: AI_TRIAGE_PROVIDER
+        value: deepseek
+      - key: AI_TRIAGE_MODEL
+        value: deepseek-v4-pro
+      - key: AI_TRIAGE_BASE_URL
+        value: https://api.deepseek.com
+      - key: AI_TRIAGE_REASONING_EFFORT
+        value: high
+      - key: AI_TRIAGE_THINKING_MODE
+        value: disabled
+      - key: AI_TRIAGE_SECONDARY_PROVIDER
+        value: kimi
+      - key: AI_TRIAGE_SECONDARY_MODEL
+        value: moonshot-v1-auto
+      - key: AI_TRIAGE_SECONDARY_BASE_URL
+        value: https://api.moonshot.cn/v1
+      - key: AI_TRIAGE_SECONDARY_REASONING_EFFORT
+        value: high
+      - key: AI_TRIAGE_SECONDARY_THINKING_MODE
+        value: disabled
+      - key: BOOKING_PROVIDER
+        value: mock
+      - key: CLINICAL_PROVIDER
+        value: memory
+      - key: REMINDER_PROVIDER
+        value: medtimer
+      - key: AI_TRIAGE_API_KEY
+        sync: false
+      - key: AI_TRIAGE_SECONDARY_API_KEY
+        sync: false

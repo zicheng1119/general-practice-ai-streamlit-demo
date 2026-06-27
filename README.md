@@ -256,3 +256,56 @@ KIMI_API_KEY = "your-kimi-api-key"
 如果把 Secrets 放在 `[general]` 分组里也可以，部署版会自动识别。保存 Secrets 后，请在 Streamlit Cloud 中点击重启或重新部署应用。应用侧边栏会显示 `Secrets 自检`，只显示脱敏后的配置状态，不会展示完整 key。
 
 本地可参考 [.streamlit/secrets.toml.example](./.streamlit/secrets.toml.example)，但真实 `.streamlit/secrets.toml` 已被 `.gitignore` 排除。
+
+## Render 部署
+
+如果你希望线上效果尽量接近本地 React 界面，推荐用 Render 部署本仓库根目录的 `Dockerfile`。这个部署方式会：
+
+- 构建 `frontend` 的 React/Vite 静态文件。
+- 用 FastAPI 启动后端。
+- 让同一个 Render 网址同时提供前端页面和 API。
+
+### 1. 使用 Blueprint 部署
+
+在 Render 控制台选择：
+
+- New -> Blueprint
+- 选择 GitHub 仓库
+- Branch: `main`
+- Blueprint file: `render.yaml`
+
+也可以选择 New -> Web Service，Runtime 选择 Docker，仓库根目录保持默认即可。
+
+### 2. Environment 配置
+
+不要把真实 API Key 提交到 GitHub。请在 Render 的 Environment 页面填写：
+
+```env
+AI_TRIAGE_API_KEY=your-deepseek-api-key
+AI_TRIAGE_SECONDARY_API_KEY=your-kimi-api-key
+```
+
+`render.yaml` 已经内置以下默认配置：
+
+```env
+AI_TRIAGE_MODE=deepseek
+AI_TRIAGE_PROVIDER=deepseek
+AI_TRIAGE_MODEL=deepseek-v4-pro
+AI_TRIAGE_BASE_URL=https://api.deepseek.com
+AI_TRIAGE_SECONDARY_PROVIDER=kimi
+AI_TRIAGE_SECONDARY_MODEL=moonshot-v1-auto
+AI_TRIAGE_SECONDARY_BASE_URL=https://api.moonshot.cn/v1
+BOOKING_PROVIDER=mock
+CLINICAL_PROVIDER=memory
+REMINDER_PROVIDER=medtimer
+```
+
+### 3. 验证部署
+
+Render 部署完成后：
+
+- 打开 Render 给出的公网 URL，应该看到 React 版 Web Demo。
+- 访问 `<Render URL>/health`，应该返回 `{"status":"ok"}`。
+- 前端路由如 `<Render URL>/patient/intake` 会由 FastAPI 回退到 React 页面。
+
+Render 免费实例可能会休眠，第一次打开会慢一些。

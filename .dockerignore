@@ -1,0 +1,17 @@
+.git
+.gitignore
+.dockerignore
+backend/.env
+frontend/.env
+.streamlit/secrets.toml
+.venv-fastchat/
+.models/
+.pytest_cache/
+.playwright-cli/
+output/
+**/__pycache__/
+**/*.pyc
+**/*.log
+**/*.log.*
+frontend/node_modules/
+frontend/dist/

@@ -25,7 +25,7 @@ services:
       - key: AI_TRIAGE_SECONDARY_MODEL
         value: moonshot-v1-auto
       - key: AI_TRIAGE_SECONDARY_BASE_URL
-        value: https://api.moonshot.cn/v1
+        value: https://api.moonshot.ai/v1
       - key: AI_TRIAGE_SECONDARY_REASONING_EFFORT
         value: high
       - key: AI_TRIAGE_SECONDARY_THINKING_MODE

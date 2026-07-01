@@ -241,7 +241,7 @@ AI_TRIAGE_BASE_URL = "https://api.deepseek.com"
 
 AI_TRIAGE_SECONDARY_PROVIDER = "kimi"
 AI_TRIAGE_SECONDARY_MODEL = "moonshot-v1-auto"
-AI_TRIAGE_SECONDARY_BASE_URL = "https://api.moonshot.cn/v1"
+AI_TRIAGE_SECONDARY_BASE_URL = "https://api.moonshot.ai/v1"
 
 BOOKING_PROVIDER = "mock"
 CLINICAL_PROVIDER = "memory"
@@ -296,7 +296,7 @@ AI_TRIAGE_MODEL=deepseek-v4-pro
 AI_TRIAGE_BASE_URL=https://api.deepseek.com
 AI_TRIAGE_SECONDARY_PROVIDER=kimi
 AI_TRIAGE_SECONDARY_MODEL=moonshot-v1-auto
-AI_TRIAGE_SECONDARY_BASE_URL=https://api.moonshot.cn/v1
+AI_TRIAGE_SECONDARY_BASE_URL=https://api.moonshot.ai/v1
 BOOKING_PROVIDER=mock
 CLINICAL_PROVIDER=memory
 REMINDER_PROVIDER=medtimer

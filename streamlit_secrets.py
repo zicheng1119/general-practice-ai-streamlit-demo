@@ -13,7 +13,7 @@ DEFAULT_ENV = {
     "AI_TRIAGE_THINKING_MODE": "disabled",
     "AI_TRIAGE_SECONDARY_PROVIDER": "kimi",
     "AI_TRIAGE_SECONDARY_MODEL": "moonshot-v1-auto",
-    "AI_TRIAGE_SECONDARY_BASE_URL": "https://api.moonshot.cn/v1",
+    "AI_TRIAGE_SECONDARY_BASE_URL": "https://api.moonshot.ai/v1",
     "AI_TRIAGE_SECONDARY_REASONING_EFFORT": "high",
     "AI_TRIAGE_SECONDARY_THINKING_MODE": "disabled",
     "BOOKING_PROVIDER": "mock",

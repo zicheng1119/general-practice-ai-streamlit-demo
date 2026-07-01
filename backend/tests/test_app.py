@@ -713,10 +713,10 @@ def test_kimi_triage_uses_moonshot_api_without_deepseek_extensions(monkeypatch: 
         },
         api_key="kimi-key",
         model="kimi-k2.6",
-        base_url="https://api.moonshot.cn/v1",
+        base_url="https://api.moonshot.ai/v1",
     )
 
-    assert captured["url"] == "https://api.moonshot.cn/v1/chat/completions"
+    assert captured["url"] == "https://api.moonshot.ai/v1/chat/completions"
     assert captured["headers"]["Authorization"] == "Bearer kimi-key"
     assert captured["json"]["model"] == "kimi-k2.6"
     assert "response_format" not in captured["json"]

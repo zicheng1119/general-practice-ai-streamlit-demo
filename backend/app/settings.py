@@ -21,18 +21,32 @@ def _load_env_file() -> None:
 _load_env_file()
 
 
+def _env(*keys: str, default: str = "") -> str:
+    for key in keys:
+        value = os.getenv(key, "").strip()
+        if value:
+            return value
+    return default
+
+
 @dataclass(frozen=True)
 class Settings:
     triage_mode: str = os.getenv("AI_TRIAGE_MODE", "mock")
     triage_provider: str = os.getenv("AI_TRIAGE_PROVIDER", "")
     triage_url: str = os.getenv("AI_TRIAGE_URL", "")
-    triage_api_key: str = os.getenv("AI_TRIAGE_API_KEY", "")
+    triage_api_key: str = _env("AI_TRIAGE_API_KEY", "DEEPSEEK_API_KEY", "deepseek_api_key")
     triage_model: str = os.getenv("AI_TRIAGE_MODEL", "deepseek-v4-pro")
     triage_base_url: str = os.getenv("AI_TRIAGE_BASE_URL", "https://api.deepseek.com")
     triage_reasoning_effort: str = os.getenv("AI_TRIAGE_REASONING_EFFORT", "high")
     triage_thinking_mode: str = os.getenv("AI_TRIAGE_THINKING_MODE", "disabled")
     triage_secondary_provider: str = os.getenv("AI_TRIAGE_SECONDARY_PROVIDER", "")
-    triage_secondary_api_key: str = os.getenv("AI_TRIAGE_SECONDARY_API_KEY", "")
+    triage_secondary_api_key: str = _env(
+        "AI_TRIAGE_SECONDARY_API_KEY",
+        "KIMI_API_KEY",
+        "MOONSHOT_API_KEY",
+        "kimi_api_key",
+        "moonshot_api_key",
+    )
     triage_secondary_model: str = os.getenv("AI_TRIAGE_SECONDARY_MODEL", "vicuna-13b")
     triage_secondary_base_url: str = os.getenv("AI_TRIAGE_SECONDARY_BASE_URL", "")
     triage_secondary_reasoning_effort: str = os.getenv("AI_TRIAGE_SECONDARY_REASONING_EFFORT", "high")

@@ -17,6 +17,7 @@ def test_build_env_from_flat_and_nested_streamlit_secrets() -> None:
     assert env["AI_TRIAGE_PROVIDER"] == "deepseek"
     assert env["AI_TRIAGE_SECONDARY_PROVIDER"] == "kimi"
     assert env["AI_TRIAGE_SECONDARY_MODEL"] == "moonshot-v1-auto"
+    assert env["AI_TRIAGE_SECONDARY_BASE_URL"] == "https://api.moonshot.ai/v1"
 
 
 def test_mask_secret_never_exposes_full_value() -> None:
